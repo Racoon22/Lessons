@@ -1,0 +1,128 @@
+<?php
+
+
+/*$number = 5;
+while ($number >= 2) { 
+echo $number . "<br/>";
+$number -= 1; // $number = $number - 1
+} 
+
+ do {
+     echo $number . "<br/>";
+    $number -= 1;
+     
+ }while ($number >= 5) ;
+
+ 
+for ($counter=1; $counter <= 5; $counter++) { 
+    echo "Добро пожаловать в мир PHP!<br/>";
+} 
+ 
+//Создается новый массив, содержащий 5 значений цвета
+ $colors = array('first'=>'red', 'green', 'blue', 'yellow','white');
+ // Цикл for используется для итераций по массиву и вывода каждого элемента
+# for ($i = 0; $i < countt($colors); $i++) { 
+# echo "Значением элемента массива $i+1 является $colors[$i].<br>.";
+#} 
+foreach ($colors as $key => $value) {
+    echo "Значением элемента массива $key является $value.($key =$value) <br>";
+}
+
+
+$colors = array('first'=>'red', 'green', 'blue', 'yellow','white');
+foreach ($colors as $value) {
+    echo "Значением элемента массива является $value. ($value) <br>";
+} 
+$colors = array('first'=>'red', 'green', 'blue', 'yellow','white');
+foreach ($colors as $key => $value) {
+    
+   $colors[$key] = $value.' yes';
+
+    echo "Значением элемента массива является $value. ($value) <br>";
+   }
+  
+$colors = array('first'=>'red', 'green', 'blue', 'yellow','white');
+foreach ($colors as $key => &$value) {
+    
+   $colors['first'] = $value.' no!';
+
+  //  echo "Значением элемента массива является $value. ($value) <br>";
+   }
+   print_r($colors);
+ 
+
+$n = 10; 
+$i = ; 
+while (true)
+ { 
+echo "$i<br/>"; 
+$i++; 
+if ($i > $n) 
+break; 
+}
+  
+
+$colors = array('first'=>'red', 'green', 'blue', 'yellow','white');
+foreach ($colors as $key => &$value) {
+    
+   $value  = $value.' no!';
+   if ($value =='blue no!')
+       break;
+
+  //  echo "Значением элемента массива является $value. ($value) <br>";
+   }
+   print_r($colors);
+
+$colors = array('first'=>'red', 'green', 'blue', 'yellow','white');
+foreach ($colors as $key => &$value) {
+    
+      if ($value =='blue'){
+       continue;
+    }
+       $value.= ' no!';
+    
+}
+print_r($colors);
+
+$n = 10;
+for ($i = 1; $i <= $n; $i++) {
+    if ($i % 2 == 0)
+        continue;
+    echo "$i<br/>";
+}
+ 
+?>
+
+<!--Многомерный массив возникает, когда элементы некоторого массива сами содержат массивы (которые, в свою очередь, могут содержать массивы и т. д.). Для инициализации многомерных массивов используются те же средства, включая вложенные конструкции аrray():-->
+
+
+<!--Для доступа к элементам многомерных массивов, вложенным глубоко внутрь, применяются дополнительные скобки. Таким образом, $aLanguages["Germanic"] указывает на массив, содержащий германские языки, а $aLanguages["Germanic"][2] указывает на третий элемент ("English") вложенного массива.--> 
+<!--Обход многомерных массивов может осуществляться с помощью вложенных циклов:-->
+<?php
+$aLanguages = array("Slavic" => array("Russian", "Polish", "Slovenian"),"Germanic" => array("Swedish", "Dutch", "English"),"Romance" => array("Italian", "Spanish", "Romanian"));
+
+print_r($aLanguages);
+
+foreach ($aLanguages as $sKey => $aFamily) {
+// Вывести название семейства языков:
+    echo(
+    "<h2>$sKey</h2>" .
+    "<ul>"
+    );
+// Теперь перечислить языки в каждом семействе:
+    foreach ($aFamily as $sLanguage) {
+        echo("<li>$sLanguage</li>");
+    }
+// Завершить список:
+    echo("</ul>");
+}
+?>
+
+$x=0;
+global $x;
+print_r($GLOBALS);
+echo $GLOBALS['x'];
+*/
+session_start();
+print_r($_SESSION);
+?>
