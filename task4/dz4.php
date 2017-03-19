@@ -51,12 +51,6 @@ diskont = diskont'.  mt_rand(0, 2).';
 осталось на складе = '.  mt_rand(0, 10).';
 diskont = diskont'.  mt_rand(0, 2).';
 
-[Кукла Барби]
-цена = '.  mt_rand(1, 10).';
-количество заказано = '.  mt_rand(1, 10).';
-осталось на складе = '.  mt_rand(0, 10).';
-diskont = diskont'.  mt_rand(0, 2).';
-
 ';
 $bd=  parse_ini_string($ini_string, true);
 
@@ -93,15 +87,17 @@ function parse_basket($basket){
            $discount = discount($name, $params['цена'],$params['осталось на складе'],$params['diskont']);
            echo "<td align = center>".$params['цена']."</td>
                 <td align = center>". $discount['skidka']."</td>
-                <td align = center>". $discount['price']."</td>";
-           $info['количество заказано'] = $info['количество заказано']+$params['количество заказано'];          
-        }  else { $discount = discount($name, $params['цена'],$params['количество заказано'],$params['diskont']);
+                <td align = center>". $discount['price']."</td>
+                <td align = center>". $discount['price_total']."</td></tr>";
+           $info['количество заказано'] = $info['количество заказано']+$params['осталось на складе'];          
+        }  else { 
+            $discount = discount($name, $params['цена'],$params['количество заказано'],$params['diskont']);
         
            echo "<td align = center>".$params['цена']."</td>
                 <td align = center>". $discount['skidka']."</td>
                 <td align = center>". $discount['price']."</td>
                <td align = center>". $discount['price_total']."</td></tr>";
-           $info['количество заказано'] = $info['количество заказано']+$params['количество заказано'];      
+            $info['количество заказано'] = $info['количество заказано']+$params['количество заказано'];       
      }
        
  
@@ -156,7 +152,7 @@ function discount($name,$price,$amount,$diskont){
         if ($name == 'Игрушка детская велосипед' && $params['количество заказано']>$params['осталось на складе']  && $params['осталось на складе']>=3){
           echo '<h1>Скидка</h1><br>Вы заказали товара '.$name.'больше 3 шт. Вам предоставляется скидка 30%';
       }elseif ($name == 'Игрушка детская велосипед' && $params['количество заказано']<$params['осталось на складе']  && $params['количество заказано']>=3){
-          echo "<h1>Скидка</h1><br>Вы заказали товара ".$name.'больше 3 шт. Вам предоставляется скидка 30%';
+          echo "<h1>Скидка</h1><br>Вы заказали товара ".$name.' больше 3 шт. Вам предоставляется скидка 30%';
         }
   }
   }
