@@ -10,27 +10,33 @@ $news = 'Четыре новосибирские компании вошли в 
 «Красный факел» пустит публику на ночные экскурсии за кулисы и по закоулкам столетнего здания
 Звезды телешоу «Голос» Наргиз Закирова и Гела Гуралиа споют в «Маяковском»';
 $news = explode("\n", $news);
-
+$news = array_combine(range(1, count($news )), $news ); // Что бы первая новость выводилась при вводе 1, а не ноль;
 foreach ($news as $key => $value) {
     
 }
 
 //Функция вывода всех переменных
-function All_news($param1, $param2, $param3, $param4, $param5, $param6, $param7,  $param8) {
-    echo 'Новости дня!<br>' . $param1 . '<br>' . $param2 . '<br>' . $param3 . '<br>' . $param4 . '<br>' . $param5 . '<br>' . $param6 . '<br>' . $param7 . '<br>'.$param8.'<br>';
+function All_news($param1, $param2, $param3, $param4, $param5, $param6, $param7,  $param8, $param9) {
+    echo 'Новости дня!<br>(1) ' . $param1 . '<br>(2) ' . $param2 . '<br>(3) ' . $param3 . '<br>(4) ' . $param4 . '<br>(5) ' . $param5 . '<br>(6) ' . $param6 . '<br>(7) ' . $param7 . '<br>(8) '.$param8.'<br>(9) '.$param9;
 }
 //Фунция вывода Функция вывода конкретной новости(по id) и всех новостей при отсутствии id или если id>$key
+
+//выдает ошибку при вводе параметра не id
 if (array_key_exists("id", $_GET)==FALSE && !empty($_GET)) {
    header("HTTP/1.0 404 Not Found");
     echo "Ошибка 404 страница не найдена";
-} elseif (isset($_GET['id']) && ($_GET["id"] <= $key)) {
+}    
+//выдает новость по запрашиваемому id
+ elseif (isset($_GET['id']) && ($_GET["id"] <= $key) && ($_GET["id"]>0)) {
     echo 'Новость дня!<br>' . $news[$_GET["id"]];
-}   elseif (array_key_exists('id', $_GET)) {    
-   } else {
+}
+//выдает уведомление об отсутствии запрашиваемой новости и выдает все новости
+   elseif (isset($_GET['id']) && ($_GET["id"] >= $key) && ($_GET["id"]>0)) { 
     echo 'Новость не найдена <br><br><br>';
-    All_news($news[0], $news[1], $news[2], $news[3], $news[4], $news[5], $news[6], $news[7]);
+    All_news($news[1], $news[2], $news[3], $news[4], $news[5], $news[6], $news[7], $news[8], $news[9]);   
+ }   
+   //в остальных случаях выдает все новости
+   else {
+   All_news($news[1], $news[2], $news[3], $news[4], $news[5], $news[6], $news[7], $news[8], $news[9]);  
 } 
-
-
-
 ?>

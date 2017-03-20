@@ -1,6 +1,4 @@
 <?php
-
-
 $news = 'Четыре новосибирские компании вошли в сотню лучших работодателей
 Выставка университетов США: открой новые горизонты
 Оценку «неудовлетворительно» по качеству получает каждая 5-я квартира в новостройке
@@ -11,40 +9,48 @@ $news = 'Четыре новосибирские компании вошли в 
 «Красный факел» пустит публику на ночные экскурсии за кулисы и по закоулкам столетнего здания
 Звезды телешоу «Голос» Наргиз Закирова и Гела Гуралиа споют в «Маяковском»';
 $news = explode("\n", $news);
-
+$news = array_combine(range(1, count($news)), $news); // Что бы первая новость выводилась при вводе 1, а не ноль;
 foreach ($news as $key => $value) {
     
 }
+
 //Функция вывода всех переменных
-function All_news($param1, $param2, $param3, $param4, $param5, $param6, $param7, $param8) {
-    echo 'Новости дня!<br>' . $param1 . '<br>' . $param2 . '<br>' . $param3 . '<br>' . $param4 . '<br>' . $param5 . '<br>' . $param6 . '<br>' . $param7 . '<br>' . $param8 . '<br>';
+function All_news($param1, $param2, $param3, $param4, $param5, $param6, $param7, $param8, $param9) {
+    echo 'Новости дня!<br>(1) ' . $param1 . '<br>(2) ' . $param2 . '<br>(3) ' . $param3 . '<br>(4) ' . $param4 . '<br>(5) ' . $param5 . '<br>(6) ' . $param6 . '<br>(7) ' . $param7 . '<br>(8) ' . $param8 . '<br>(9) ' . $param9;
 }
 
 //Фунция вывода Функция вывода конкретной новости(по id) и всех новостей при отсутствии id или если id>$key
 
-if (!isset($_POST["id"])) {
-    All_news($news[0], $news[1], $news[2], $news[3], $news[4], $news[5], $news[6],$news[7]);
-} elseif ((isset($_POST["id"])) && ($_POST["id"] <= $key)) {
+
+// выводит все новости при пустом вводе или 0
+if (empty($_POST['id']) or ( $_POST['id'] == '0')) {
+    All_news($news[1], $news[2], $news[3], $news[4], $news[5], $news[6], $news[7], $news[8], $news[9]);
+   //если при введении используются буквы выдает ошибку 
+} elseif (!ctype_digit($_POST['id']) == TRUE) { 
+    header("HTTP/1.0 404 Not Found");
+    echo "Ошибка 404 страница не найдена";
+    exit;
+    //выводит номер новости
+} elseif ((ctype_digit($_POST['id']) == TRUE) && $_POST['id'] <= $key) {
     echo 'Новость дня!<br>' . $news[$_POST["id"]];
-} elseif ((isset($_POST["id"])) && ($_POST["id"] > $key)) {
-    echo 'Новость не найдена<br><br><br>';
-    All_news($news[0], $news[1], $news[2], $news[3], $news[4], $news[5], $news[6], $news[7]);
-
+    //выводит уведомление об отсутствии запрашиваемой и все новости
+} elseif ((ctype_digit($_POST['id']) == TRUE) && $_POST['id'] >= $key) {
+     echo 'Новость не найдена <br><br><br>';
+    All_news($news[1], $news[2], $news[3], $news[4], $news[5], $news[6], $news[7], $news[8], $news[9]);
 }
-
 ?>
 <!DOCTYPE HTML>
 <html>
- <head>
-  <meta charset="utf-8">
-  <title>NEWS</title>
- </head>
- <body>
+    <head>
+        <meta charset="utf-8">
+        <title>NEWS</title>
+    </head>
+    <body>
 
-     <form action="dz52.php" method="POST">
-  <p><b>Выберете новость, о которой вы хотите узнать больше</b></p>
-  <p><input type="digital" name="id" value=""></p>
-  <p><input type="submit"></p>
- </form>
- </body>
+        <form action="dz52.php" method="POST">
+            <p><b>Выберете новость, о которой вы хотите узнать больше, либо введите 0 для перехода в главное меню   </b></p>
+            <p><input type="text" name="id" value=""></p>
+            <p><input type="submit"></p>
+        </form>
+    </body>
 </html>
