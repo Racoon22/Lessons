@@ -1,5 +1,6 @@
 <?php
-$news = 'Четыре новосибирские компании вошли в сотню лучших работодателей
+
+ $news = 'Четыре новосибирские компании вошли в сотню лучших работодателей
 Выставка университетов США: открой новые горизонты
 Оценку «неудовлетворительно» по качеству получает каждая 5-я квартира в новостройке
 Студент-изобретатель раскрыл запутанное преступление
@@ -8,40 +9,37 @@ $news = 'Четыре новосибирские компании вошли в 
 День святого Патрика: угощения, пивной теннис и уличные гуляния с огнем
 «Красный факел» пустит публику на ночные экскурсии за кулисы и по закоулкам столетнего здания
 Звезды телешоу «Голос» Наргиз Закирова и Гела Гуралиа споют в «Маяковском»';
+ 
+ 
 $news = explode("\n", $news);
-$news = array_combine(range(1, count($news)), $news); // Что бы первая новость выводилась при вводе 1, а не ноль;
-foreach ($news as $key => $value) {
-    
-}
-
+$news = array_combine(range(1, count($news )), $news ); // Что бы первая новость выводилась при вводе 1, а не ноль;
+echo '<title>POST</title> <h1 align="center">Новости</h1>';
+ if (!isset($_POST['id'])){
+        $id = false;
+    }
+    else {
+         $id = (int) $_POST['id'];
+    }
 //Функция вывода всех переменных
-function All_news($param1, $param2, $param3, $param4, $param5, $param6, $param7, $param8, $param9) {
-    echo 'Новости дня!<br>(1) ' . $param1 . '<br>(2) ' . $param2 . '<br>(3) ' . $param3 . '<br>(4) ' . $param4 . '<br>(5) ' . $param5 . '<br>(6) ' . $param6 . '<br>(7) ' . $param7 . '<br>(8) ' . $param8 . '<br>(9) ' . $param9;
+function All_news($news){
+    foreach ($news as $key => $value) {
+        echo $key.'-'.$value.'<br>';
+    }
 }
 
-//Фунция вывода Функция вывода конкретной новости(по id) и всех новостей при отсутствии id или если id>$key
+function choosen_news($id){
+    global $news;    
+    echo "<h2 align='center'>".$id.'-'.$news[$id]."</h2>";
+    }
+    
+  if (!isset($news[$id])){
+      All_news($news);
+  } else {
+      choosen_news($id);
+  }
+  ?>  <html>
 
-
-// выводит все новости при пустом вводе или 0
-if (empty($_POST['id']) or ( $_POST['id'] == '0')) {
-    All_news($news[1], $news[2], $news[3], $news[4], $news[5], $news[6], $news[7], $news[8], $news[9]);
-   //если при введении используются буквы выдает ошибку 
-} elseif (!ctype_digit($_POST['id']) == TRUE) { 
-    header("HTTP/1.0 404 Not Found");
-    echo "Ошибка 404 страница не найдена";
-    exit;
-    //выводит номер новости
-} elseif ((ctype_digit($_POST['id']) == TRUE) && $_POST['id'] <= $key) {
-    echo 'Новость дня!<br>' . $news[$_POST["id"]];
-    //выводит уведомление об отсутствии запрашиваемой и все новости
-} elseif ((ctype_digit($_POST['id']) == TRUE) && $_POST['id'] >= $key) {
-     echo 'Новость не найдена <br><br><br>';
-    All_news($news[1], $news[2], $news[3], $news[4], $news[5], $news[6], $news[7], $news[8], $news[9]);
-}
-?>
-<!DOCTYPE HTML>
-<html>
-    <head>
+      <head>
         <meta charset="utf-8">
         <title>NEWS</title>
     </head>
@@ -54,3 +52,5 @@ if (empty($_POST['id']) or ( $_POST['id'] == '0')) {
         </form>
     </body>
 </html>
+
+
