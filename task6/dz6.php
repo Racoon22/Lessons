@@ -3,7 +3,7 @@ session_start();
 
 // Блок функций
 function show_city_block($point) {
-    $citys = array('', 'Новосибирск', 'Барабинск', 'Бердск', 'Искитим');
+    $citys = array('Москва', 'Новосибирск', 'Барабинск', 'Бердск', 'Искитим');
     foreach ($citys as $number => $city) {
         if ($number == $point) {
             echo '<option selected value="' . $number . '">' . $city . '</option>';
@@ -14,7 +14,7 @@ function show_city_block($point) {
 }
 
 function show_category_block($point) {
-    $category = array('', 'Транспорт', 'Недвижимость', 'Услуги', 'Личные вещи', 'Для дома и дачи', 'Бытовая электроника', 'Хобби и отдых');
+    $category = array('Товары для взрослых', 'Транспорт', 'Недвижимость', 'Услуги', 'Личные вещи', 'Для дома и дачи', 'Бытовая электроника', 'Хобби и отдых');
     foreach ($category as $number => $item) {
         if ($number == $point) {
             echo '<option selected value="' . $number . '">' . $item . '</option>';
@@ -75,14 +75,13 @@ if (!isset($_GET['id']) || ($_GET['action']) == 'delete') {
 
             <label for="fld_category_id" class="form-label">Выбирете город</label>
             <select title="Выберите Ваш город" name="location_id" id="region" class="form-input-select"> 
-                <option value="
-                        ">-- Выберите город --</option>
-                <option<?php show_city_block($ad['location_id']); ?>                 
+                <option value="">-- Выберите город --</option>
+                <?php show_city_block($ad['location_id']); ?>                 
         </select>
         <p><label for="fld_category_id" class="form-label">Категория</label> 
             <select title="Выберите категорию объявления" name="category_id" id="fld_category_id" class="form-input-select"> 
                 <option value="">-- Выберите категорию --</option>
-                <option<?php show_category_block($ad['category_id']); ?>
+               <?php show_category_block($ad['category_id']); ?>
         </select>
     <p><label for="fld_title" class="form-label">Название объявления</label> 
         <input type="text" maxlength="50" class="form-input-text-long" value="<?php show($ad['title']) ?>" name="title" id="fld_title"></p>

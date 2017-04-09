@@ -2,7 +2,7 @@
 
 // Блок функций
 function show_city_block($point) {
-    $citys = array('Новосибирск', 'Барабинск', 'Бердск', 'Искитим');
+    $citys = array('', 'Новосибирск', 'Барабинск', 'Бердск', 'Искитим');
     foreach ($citys as $number => $city) {
         if ($number == $point) {
             echo '<option selected value="' . $number . '">' . $city . '</option>';
@@ -13,7 +13,7 @@ function show_city_block($point) {
 }
 
 function show_category_block($point) {
-    $category = array('Транспорт', 'Недвижимость', 'Услуги', 'Личные вещи', 'Для дома и дачи', 'Бытовая электроника', 'Хобби и отдых');
+    $category = array('', 'Транспорт', 'Недвижимость', 'Услуги', 'Личные вещи', 'Для дома и дачи', 'Бытовая электроника', 'Хобби и отдых');
     foreach ($category as $number => $item) {
         if ($number == $point) {
             echo '<option selected value="' . $number . '">' . $item . '</option>';
@@ -22,38 +22,42 @@ function show_category_block($point) {
         }
     }
 }
-
-if (isset($_COOKIE['ads'])) {
-    $ad = unserialize($_COOKIE['ads']);
+phpinfo();
+$id=$_GET['id'];
+// проверка на существования файла
+$filename = 'myfile.html';
+if (!$handle = fopen($filename, 'a+')) {
+    echo "Не могу открыть файл '$filename'";
+    exit;
 }
-
 //запись нового обновления
-
-if ($_POST['add_ads'] == "Новое объявление" && !isset($_GET['action'])) {
+$content = file_get_contents($filename);
+$ad = unserialize($content);
+if ($_POST['add_ads'] === "Новое объявление" && !isset($_GET['action'])) {
     $ad[] = $_POST;
-    header("Location: dz71");
+    header("Location: dz72.php");
 } elseif (isset($_POST['add_ads']) == 'Сохранить объявление') {
-    //редактирование объявления
+//редактирование объявления
     $ad[$_POST['id']] = array_replace($ad[$_POST['id']], $_POST);
     if (isset($ad[$_POST['id']]['allow_mails']) && !isset($_POST['allow_mails'])) {
         unset($ad[$_POST['id']]['allow_mails']);
     }
-    header("Location: dz71.php");
+    header("Location: dz72.php");
 }
 //удаление объявления
 if ($_GET['action'] == 'delete') {
-    unset($ad[$_GET['id']]);
-    header("Location: dz71.php");
+    unset($ad[$id]);
+    header("Location: dz72.php");
 }
-//запись объявления в куки
-setcookie('ads', serialize($ad), time() + 7 * 24 * 60 * 60);
+//записывание обратно в файл после операций с данными
+file_put_contents($filename, serialize($ad));
+
 function show($point) {
     if ($_GET['action'] == 'show') {
         echo $point;
     }
 }
-
-//изменение названия кнопки в зависимости от операции, если мы заполняем объявление предлагается его создать, если просматриваем, предлагаеться сохранить.
+// изменение названия кнопки в зависимости от операции, если мы заполняем объявление предлагается его создать, если просматриваем, предлагаеться сохранить.
 if (!isset($_GET['id'])) {
     $button_add_ads = "Новое объявление";
 } else {
@@ -66,7 +70,7 @@ if (!isset($_GET['id'])) {
         <title>Интернет ларёк</title>
     </head>
     <body>
-        <form action="dz71.php" method="POST">
+        <form action="dz72.php" method="POST">
             <input type="hidden" name="id" value="<?php echo $_GET['id'] ?>">
             <label class="form-label-radio"><input type="radio" value="1" name="private" <?php echo $ad[$_GET['id']]['private'] == '1' ? 'checked' : '' ?> >Частное лицо</label> <label class="form-label-radio"><input type="radio" value="0" name="private" <?php echo $ad[$_GET['id']]['private'] == '0' ? 'checked' : '' ?>>Компания</label>
             <p><label><b id="your-name">Ваше имя</b></label>
@@ -80,17 +84,17 @@ if (!isset($_GET['id'])) {
             <select title="Выберите Ваш город" name="location_id" id="region" class="form-input-select"> 
                 <option value="
                         ">-- Выберите город --</option>
-                <?php show_city_block($ad[$_GET['id']]['location_id']); ?>                 
+                <option<?php show_city_block($ad[$_GET['id']]['location_id']); ?>                 
         </select>
         <p><label for="fld_category_id" class="form-label">Категория</label> 
             <select title="Выберите категорию объявления" name="category_id" id="fld_category_id" class="form-input-select"> 
                 <option value="">-- Выберите категорию --</option>
-                <?php show_category_block($ad['category_id']); ?>
+                <option<?php show_category_block($ad['category_id']); ?>
         </select>
     <p><label for="fld_title" class="form-label">Название объявления</label> 
         <input type="text" maxlength="50" class="form-input-text-long" value="<?php show($ad[$_GET['id']]['title']) ?>" name="title" id="fld_title"></p>
     <p><label for="fld_description" class="form-label" id="js-description-label">Описание объявления</label> 
-        <textarea maxlength="6000" name="description" id="fld_description" class="form-input-textarea"><?php show($ad[$_GET['id']]['description']) ?></textarea></p> 
+        <textarea maxlength="6000" name="description" id="fld_description" class="form-input-textarea"><?php show($$ad[$_GET['id']]['description']) ?></textarea></p> 
 
     <label id="price_lbl" for="fld_price" class="form-label">Цена</label> 
     <input type="text" maxlength="9" class="form-input-text-short" value="<?php show($ad[$_GET['id']]['price']) ?>" name="price" id="fld_price">&nbsp;<span>руб.</span> 
