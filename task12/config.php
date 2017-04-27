@@ -1,10 +1,14 @@
 <?php
 
+error_reporting(E_ERRORS|E_WANING|E_PARSE);
+ini_set('display_errors', 1);
+
+
 $project_root = $_SERVER['DOCUMENT_ROOT']; 
 
 require_once $project_root."/dbsimple/config.php";
 require_once $project_root."/dbsimple/DbSimple/Generic.php";
-//require_once $project_root."/FirePHPCore/FirePHP.class.php";
+require_once $project_root."/FirePHPCore/FirePHP.class.php";
 
 // Подключаемся к БД.
 $db = DbSimple_Generic::connect('mysqli://root:yes@127.0.0.1/test');
@@ -13,10 +17,10 @@ $db = DbSimple_Generic::connect('mysqli://root:yes@127.0.0.1/test');
 
 // Устанавливаем обработчик ошибок.
 $db-> setErrorHandler('databaseErrorHandler');
-$db->query("SET NAMES UTF8");
 
 
-// Код обработчика ошибок SQL.
+
+
 function databaseErrorHandler($message, $info)
 {
     // Если использовалась @, ничего не делать.

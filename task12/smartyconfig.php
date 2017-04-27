@@ -15,8 +15,8 @@ $smarty->cache_dir = $smarty_dir.'cache';
 $smarty->config_dir = $smarty_dir.'configs';
 
 $smarty->assign('private_radios', array(
-                               1 => 'Частное лицо',
-                               2 => 'Компания'));
+                               0 => 'Частное лицо',
+                               1 => 'Компания'));
 
 $smarty->assign('sity_options', array(
                                1 => '--Выбор города--',
