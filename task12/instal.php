@@ -30,7 +30,7 @@ mysql_select_db($mysql_database) or die('Error selecting MySQL database: ' . mys
 // Temporary variable, used to store current query
 $templine = '';
 // Read in entire file
-$lines = file($filename);
+$lines = file('test.sql');
 // Loop through each line
 foreach ($lines as $line)
 {
@@ -49,7 +49,8 @@ if (substr(trim($line), -1, 1) == ';')
     unset ($templine);
 }
 }
- echo "Tables imported successfully";
+ include "index.php";
+ exit();
 }
 ?> 
 

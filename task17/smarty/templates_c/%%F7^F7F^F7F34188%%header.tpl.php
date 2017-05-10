@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.30, created on 2017-04-26 09:10:11
+<?php /* Smarty version 2.6.30, created on 2017-05-09 20:08:07
          compiled from header.tpl */ ?>
 <HTML>
     <HEAD>
@@ -9,17 +9,17 @@
 
             <script src="../../task17/jquery-3.2.1.js" type="text/javascript"></script>
             <script src="../../task17/jquery.form.js" type="text/javascript"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+ 
+    <link href="../../../bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+
+   
+    <link href="../../../bootstrap/css/bootstrap-theme.css" rel="stylesheet" type="text/css"/>
 
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+    <script src="../../../bootstrap/js/bootstrap.js?324" type="text/javascript"></script>
 
+     <script src="main.js" type="text/javascript"></script>
 
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-
-
-    <script src="../task17/smarty/templates/main.js?<?php echo time(); ?>" type="text/javascript"></script>
-
-
+  
     </HEAD> 
     <BODY bgcolor="#ffffff">

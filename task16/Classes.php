@@ -17,17 +17,17 @@ class Ads {
     function __construct($row) {
 
         if (isset($row['id'])) {
-            $this->id = $row['id'];
+            $this->id = $row['id'];            
         }
-        $this->seller_name = $row['seller_name'];
-        $this->private = $row['private'];
-        $this->title = $row['title'];
-        $this->price = $row['price'];
-        $this->email = $row['email'];
-        $this->phone = $row['phone'];
-        $this->sity_id = $row['sity_id'];
-        $this->category_id = $row['category_id'];
-        $this->description = $row['description'];
+        $this->seller_name = trim(htmlspecialchars($row['seller_name']));
+        $this->private = trim(htmlspecialchars($row['private']));$row['private'];
+        $this->title = trim(htmlspecialchars($row['title']));$row['title'];
+        $this->price = trim(htmlspecialchars($row['price']));$row['price'];
+        $this->email = trim(htmlspecialchars($row['email']));$row['email'];
+        $this->phone = trim(htmlspecialchars($row['phone']));$row['phone'];
+        $this->sity_id = trim(htmlspecialchars($row['sity_id']));$row['sity_id'];
+        $this->category_id = trim(htmlspecialchars($row['category_id']));$row['category_id'];
+        $this->description = trim(htmlspecialchars($row['description']));$row['description'];
         if (isset($row['allow_mails']) && ($row['allow_mails'][0] == 1)) {
             $this->allow_mails = 1;
         } else {

@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.30, created on 2017-04-26 15:12:24
+<?php /* Smarty version 2.6.30, created on 2017-04-30 21:00:01
          compiled from ads_output.tpl */ ?>
 	 <table class="table" id="ads">
             <thead>
@@ -13,16 +13,16 @@
     foreach ($_from as $this->_tpl_vars['k'] => $this->_tpl_vars['v']):
 ?>
    <tr id="ad<?php echo $this->_tpl_vars['v']['id']; ?>
-"><td align = center height=50><?php echo $this->_tpl_vars['k']+1; ?>
+"  class="tr"><td class='number_row' align = center height=50><?php echo $this->_tpl_vars['k']+1; ?>
 </td>
-   <td align = center height=50><a type="button" class="show btn btn-danger"><?php echo $this->_tpl_vars['v']['title']; ?>
+   <td align = center height=50  class="title"><a  class="show title"><?php echo $this->_tpl_vars['v']['title']; ?>
 </a></td>
-   <td align = center height=50><?php echo $this->_tpl_vars['v']['price']; ?>
+   <td align = center height=50 class="price"><?php echo $this->_tpl_vars['v']['price']; ?>
 </td>
-   <td align = center height=50><?php echo $this->_tpl_vars['v']['seller_name']; ?>
+   <td align = center height=50 class="seller_name"><?php echo $this->_tpl_vars['v']['seller_name']; ?>
 </td>
-   <td align = center height=50><a type="button" class="delete btn btn-danger btn-sm">[X]</a></td></tr>
+   <td align = center height=50><a type="button" class="delete btn btn-danger ">Удалить</a></td></tr>
 <?php endforeach; endif; unset($_from); ?>
 </tbody></table>
 
-<!-- class="btn-warning"-->
+    

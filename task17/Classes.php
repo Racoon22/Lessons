@@ -17,17 +17,18 @@ class Ads {
     function __construct($row) {
 
         if (isset($row['id'])) {
-            $this->id = $row['id'];
+            $this->id = (int) $row['id'];
         }
-        $this->seller_name = $row['seller_name'];
-        $this->private = $row['private'];
-        $this->title = $row['title'];
-        $this->price = $row['price'];
-        $this->email = $row['email'];
-        $this->phone = $row['phone'];
-        $this->sity_id = $row['sity_id'];
-        $this->category_id = $row['category_id'];
-        $this->description = $row['description'];
+        $this->seller_name = trim(htmlspecialchars($row['seller_name']));
+        $this->private = trim(htmlspecialchars($row['private']));
+        $this->title = trim(htmlspecialchars($row['title']));
+        $this->price = trim(htmlspecialchars($row['price']));
+        $this->email = trim(htmlspecialchars($row['email']));
+        $this->phone = trim(htmlspecialchars($row['phone']));
+        $this->sity_id = trim(htmlspecialchars($row['sity_id']));
+        $this->category_id = trim(htmlspecialchars($row['category_id']));
+        $this->description = trim(htmlspecialchars($row['description']));
+
         if (isset($row['allow_mails']) && ($row['allow_mails'][0] == 1)) {
             $this->allow_mails = 1;
         } else {
@@ -38,11 +39,15 @@ class Ads {
     public function AddAd() {
         global $db;
         $vars = get_object_vars($this);
-        $db->query("REPLACE INTO ads (?#) VALUES (?a)", array_keys($vars), array_values($vars));
+        $id = $db->query("INSERT INTO ads (?#) VALUES (?a)", array_keys($vars), array_values($vars));
+        return $id;
     }
 
-    public static function DeleteAd($db, $id) {
-        $db->query('DELETE FROM ads WHERE id=?d', $id);
+    public function UpAd() {
+        global $db;
+        $vars = get_object_vars($this);
+        return $db->query('UPDATE ?_ads SET ?a WHERE id=?', $vars, $_POST['id']);
+        ;
     }
 
 }
@@ -105,20 +110,93 @@ class AdsStore {
     }
 
     public function showSingleAd($id) {
-        global $smarty;
-        $show_ads = $this->ads[$id];
-        $smarty->assign('show_ads', $show_ads); // заполняем форму введенными значениями
+        if (isset($this->ads[$id])) {
+            $show_ads = $this->ads[$id];
+        } else {
+            $show_ads = false;
+        }
+        return $show_ads;
+// заполняем форму введенными значениями
     }
 
     public function showAllAds() {
         global $smarty;
-        if (!empty($this->ads)){
-        foreach ($this->ads as $key => $value) {
-            $showAll[] = get_object_vars($value);
+        if (!empty($this->ads)) {
+            foreach ($this->ads as $key => $value) {
+                $showAll[] = get_object_vars($value);
+            }
+            $smarty->assign('ads', $showAll);
         }
-        $smarty->assign('ads', $showAll);
+        // выводим таблицу сообъявлениями
+    }
+
+    public static function DeleteAd($db, $id) {
+        $show_ads = $this->ads[$id];
+        $db->query('DELETE FROM ads WHERE id=?d', $id);
+    }
+
+}
+
+class connectDataBase {
+
+    private $db_server_name = '';
+    private $db_password = '';
+    private $db_user_name = '';
+    private $db_name = '';
+
+    function __construct($row) {
+
+        $this->db_server_name = trim(htmlspecialchars($row['server_name']));
+        $this->db_password = trim(htmlspecialchars($row['password']));
+        $this->db_user_name = trim(htmlspecialchars($row['user_name']));
+        $this->db_name = trim(htmlspecialchars($row['database']));
+    }
+
+    public function connectDb() {
+        global $db;
+
+        $db = DbSimple_Generic::connect("mysqli://" . $this->db_user_name . ":" . $this->db_password . "@" . $this->db_server_name . "/" . $this->db_name);
+        if ($db->setErrorHandler('databaseErrorHandler')) {
+            header("Location: instal.php");
+        };
+    }
+
+    public function setDumpIntoDataBase() {
+        global $db;
+
+        $filename = 'test.sql';
+
+        $templine = '';
+
+        $lines = file($filename);
+
+        foreach ($lines as $line) {
+
+            if (substr($line, 0, 2) == '--' || $line == '')
+                continue;
+
+
+            $templine .= $line;
+
+            if (substr(trim($line), -1, 1) == ';') {
+
+                $db->query("$templine");
+
+                unset($templine);
+            }
         }
-    // выводим таблицу сообъявлениями
+    }
+
+    public function putSettingFile() { // Записываем параметры подключения в установочный файл
+        $file_setting = 'setting.php';
+        $string = "<?php \r\n"
+                . "define('DB_USER','" . $this->db_user_name . "'); \r\n"
+                . "define('DB_PASS','" . $this->db_password . "'); \r\n"
+                . "define('DB_HOST','" . $this->db_server_name . "'); \r\n"
+                . "define('DB_NAME','" . $this->db_name . "'); \r\n";
+        if (!file_put_contents($file_setting, $string)) {
+            installErrorHandler();
+        }
     }
 
 }
