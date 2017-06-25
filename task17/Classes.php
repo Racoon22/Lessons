@@ -94,7 +94,7 @@ class AdsStore {
 
     public function getAllAdsFromDb() {
         global $db;
-        $all = $db->select('select * from ads order by id');
+        $all = $db->query('select * from ads order by id');
         foreach ($all as $value) {
             switch ($value['private']) {
                 case 0 : // Частное объявление
